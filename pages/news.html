@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News & Announcements - AlumniNetwork</title>
+  <meta name="description" content="Stay updated with university rankings, alumni achievements, research park inaugurations, and community bulletins.">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/dark.css">
+</head>
+<body>
+  <header id="app-header"></header>
+
+  <main style="padding-bottom: 5rem;">
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h1 class="page-hero-title">News & Announcements</h1>
+            <p class="page-hero-subtitle">
+              Campus milestones, alumni achievements, research press releases, and advisory notices.
+            </p>
+          </div>
+          <div id="news-hero-actions">
+            <button id="post-news-btn" class="btn btn-primary">
+              📢 Post Announcement
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filters -->
+    <section class="container">
+      <div class="filter-bar">
+        <div class="search-input-group">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="news-search" class="form-control" placeholder="Search news headlines, authors, and keywords...">
+        </div>
+
+        <select id="news-category-filter" class="form-control form-select" style="min-width: 180px; flex: 1;">
+          <option value="">All Categories</option>
+          <option value="Achievement">Achievement</option>
+          <option value="Alumni Spotlight">Alumni Spotlight</option>
+          <option value="Campus Update">Campus Update</option>
+          <option value="Notice">Notice</option>
+          <option value="Community">Community</option>
+        </select>
+      </div>
+
+      <!-- News Articles Grid -->
+      <div id="news-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.75rem;">
+        <!-- Populated by news.js -->
+      </div>
+    </section>
+
+    <!-- Article Reader Modal -->
+    <div id="news-reader-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 680px;">
+        <div class="modal-header">
+          <h3 id="reader-title" class="modal-title">Article</h3>
+          <button class="modal-close" onclick="document.getElementById('news-reader-modal').classList.remove('active')">✕</button>
+        </div>
+        <div id="reader-body" class="modal-body">
+          <!-- Populated by news.js -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline" onclick="document.getElementById('news-reader-modal').classList.remove('active')">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post Announcement Modal (Admin) -->
+    <div id="post-news-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+          <h3 class="modal-title">📢 Post New Announcement</h3>
+          <button class="modal-close" onclick="document.getElementById('post-news-modal').classList.remove('active')">✕</button>
+        </div>
+        <form id="post-news-form">
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-label" for="news-title">Article Headline *</label>
+              <input type="text" id="news-title" class="form-control" placeholder="e.g. New Research Grant Awarded" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="news-cat">Category *</label>
+                <select id="news-cat" class="form-control form-select" required>
+                  <option value="Campus Update">Campus Update</option>
+                  <option value="Achievement">Achievement</option>
+                  <option value="Alumni Spotlight">Alumni Spotlight</option>
+                  <option value="Notice">Notice</option>
+                  <option value="Community">Community</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="news-author">Author / Office *</label>
+                <input type="text" id="news-author" class="form-control" placeholder="e.g. Dean of Alumni Relations" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="news-image">Cover Image URL</label>
+              <input type="url" id="news-image" class="form-control" placeholder="https://images.unsplash.com/...">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="news-body">Full Article Text *</label>
+              <textarea id="news-body" class="form-control" rows="5" placeholder="Write full details..." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" onclick="document.getElementById('post-news-modal').classList.remove('active')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Publish Article</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer id="app-footer"></footer>
+
+  <script type="module" src="../js/storage.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/ui.js"></script>
+  <script type="module" src="../js/news.js"></script>
+</body>
+</html>

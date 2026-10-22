@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events & Reunions - AlumniNetwork</title>
+  <meta name="description" content="Discover alumni homecomings, technical symposia, networking mixers, and virtual workshops. RSVP in one click.">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/dark.css">
+</head>
+<body>
+  <header id="app-header"></header>
+
+  <main style="padding-bottom: 5rem;">
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h1 class="page-hero-title">Events & Reunions</h1>
+            <p class="page-hero-subtitle">
+              Join memorable homecomings, frontier technical talks, career fairs, and virtual workshops.
+            </p>
+          </div>
+          <div id="events-hero-actions">
+            <button id="create-event-btn" class="btn btn-primary">
+              ➕ Host / Create Event
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events Controls & Tabs -->
+    <section class="container">
+      <div class="filter-bar" style="margin-bottom: 1.5rem;">
+        <!-- Search -->
+        <div class="search-input-group">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="event-search" class="form-control" placeholder="Search events by title, venue, or description...">
+        </div>
+
+        <!-- Category Filter -->
+        <select id="event-category-filter" class="form-control form-select" style="min-width: 170px; flex: 1;">
+          <option value="">All Categories</option>
+          <option value="Reunion">Reunions & Galas</option>
+          <option value="Tech Talk">Tech Talks & Summits</option>
+          <option value="Networking">Networking Mixers</option>
+          <option value="Workshop">Workshops & Bootcamps</option>
+          <option value="Career Fair">Career Fairs</option>
+        </select>
+
+        <!-- Status Filter / Timeframe -->
+        <select id="event-timeframe-filter" class="form-control form-select" style="min-width: 160px; flex: 1;">
+          <option value="all">All Dates</option>
+          <option value="upcoming" selected>Upcoming Only</option>
+          <option value="past">Past Events</option>
+          <option value="my-rsvps">My RSVPs</option>
+        </select>
+      </div>
+
+      <!-- Events Grid -->
+      <div id="events-grid" class="events-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.75rem;">
+        <!-- Populated by events.js -->
+      </div>
+    </section>
+
+    <!-- Event Detail Modal -->
+    <div id="event-detail-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 680px;">
+        <div class="modal-header">
+          <h3 id="modal-event-title" class="modal-title">Event Details</h3>
+          <button class="modal-close" onclick="document.getElementById('event-detail-modal').classList.remove('active')">✕</button>
+        </div>
+        <div id="modal-event-body" class="modal-body">
+          <!-- Populated by events.js -->
+        </div>
+        <div id="modal-event-footer" class="modal-footer">
+          <!-- Populated by events.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Event Modal (Alumni & Admin) -->
+    <div id="create-event-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 640px;">
+        <div class="modal-header">
+          <h3 class="modal-title">📅 Create New Event</h3>
+          <button class="modal-close" onclick="document.getElementById('create-event-modal').classList.remove('active')">✕</button>
+        </div>
+        <form id="create-event-form">
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-label" for="evt-title">Event Title *</label>
+              <input type="text" id="evt-title" class="form-control" placeholder="e.g. Generative AI Alumni Symposium" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="evt-date">Date *</label>
+                <input type="date" id="evt-date" class="form-control" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="evt-time">Time Range *</label>
+                <input type="text" id="evt-time" class="form-control" placeholder="10:00 - 16:00" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="evt-category">Category *</label>
+                <select id="evt-category" class="form-control form-select" required>
+                  <option value="Tech Talk">Tech Talk</option>
+                  <option value="Reunion">Reunion</option>
+                  <option value="Networking">Networking</option>
+                  <option value="Workshop">Workshop</option>
+                  <option value="Career Fair">Career Fair</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="evt-capacity">Attendee Capacity *</label>
+                <input type="number" id="evt-capacity" class="form-control" min="5" max="2000" value="150" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="evt-venue">Venue / Location (or Virtual Link) *</label>
+              <input type="text" id="evt-venue" class="form-control" placeholder="e.g. Tech Hub Auditorium, Bangalore or Zoom Webinar" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="evt-image">Cover Banner Image URL</label>
+              <input type="url" id="evt-image" class="form-control" placeholder="https://images.unsplash.com/...">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="evt-desc">Event Description & Agenda *</label>
+              <textarea id="evt-desc" class="form-control" rows="4" placeholder="Detail the event itinerary, keynote speakers, and expectations..." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" onclick="document.getElementById('create-event-modal').classList.remove('active')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Publish Event</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer id="app-footer"></footer>
+
+  <script type="module" src="../js/storage.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/ui.js"></script>
+  <script type="module" src="../js/events.js"></script>
+</body>
+</html>

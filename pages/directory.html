@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alumni Directory - AlumniNetwork</title>
+  <meta name="description" content="Search and discover university alumni across batches, branches, locations, and professions.">
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/dark.css">
+</head>
+<body>
+  <!-- Header -->
+  <header id="app-header"></header>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h1 class="page-hero-title">Alumni Directory</h1>
+            <p class="page-hero-subtitle">
+              Connect with over 35+ verified graduates across engineering disciplines, executive leadership, and research.
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.75rem;">
+            <a href="profile.html" class="btn btn-outline">My Profile</a>
+            <a href="mentorship.html" class="btn btn-primary">Find a Mentor</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Directory Content Section -->
+    <section class="container" style="padding-bottom: 4rem;">
+      <!-- Search & Filters Container -->
+      <div class="filter-bar">
+        <!-- Search Input -->
+        <div class="search-input-group">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="dir-search" class="form-control" placeholder="Search by name, company, skills, or profession...">
+        </div>
+
+        <!-- Filter Selects -->
+        <div class="filter-selects-row" style="display: flex; gap: 0.75rem; flex-wrap: wrap; flex: 2;">
+          <!-- Batch Range -->
+          <select id="filter-batch" class="form-control form-select" style="min-width: 140px; flex: 1;">
+            <option value="">All Batches</option>
+            <option value="2010–2015">2010–2015</option>
+            <option value="2016–2020">2016–2020</option>
+            <option value="2021–2025">2021–2025</option>
+          </select>
+
+          <!-- Branch -->
+          <select id="filter-branch" class="form-control form-select" style="min-width: 160px; flex: 1;">
+            <option value="">All Branches</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Information Technology">Information Technology</option>
+            <option value="Electronics & Communication">Electronics & Comm</option>
+            <option value="Mechanical Engineering">Mechanical</option>
+            <option value="Civil Engineering">Civil</option>
+            <option value="Biotechnology">Biotechnology</option>
+            <option value="Electrical & Electronics">Electrical</option>
+            <option value="Chemical Engineering">Chemical</option>
+            <option value="Industrial Engineering">Industrial</option>
+          </select>
+
+          <!-- Location -->
+          <select id="filter-location" class="form-control form-select" style="min-width: 130px; flex: 1;">
+            <option value="">All Locations</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Hyderabad">Hyderabad</option>
+          </select>
+
+          <!-- Profession -->
+          <select id="filter-profession" class="form-control form-select" style="min-width: 160px; flex: 1;">
+            <option value="">All Professions</option>
+            <option value="Software Engineer">Software Engineer</option>
+            <option value="Data Scientist">Data Scientist</option>
+            <option value="Entrepreneur">Entrepreneur</option>
+            <option value="Academician">Academician</option>
+            <option value="Healthcare Professional">Healthcare Professional</option>
+          </select>
+
+          <!-- Sort -->
+          <select id="dir-sort" class="form-control form-select" style="min-width: 150px; flex: 1;">
+            <option value="batch-desc">Batch (Newest)</option>
+            <option value="batch-asc">Batch (Oldest)</option>
+            <option value="name-asc">Name (A–Z)</option>
+            <option value="name-desc">Name (Z–A)</option>
+          </select>
+        </div>
+
+        <!-- View Toggle & Reset -->
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button id="view-card-btn" class="btn btn-outline btn-icon" title="Card Grid View" style="background: var(--color-primary-light); color: var(--color-primary);">⊞</button>
+          <button id="view-list-btn" class="btn btn-outline btn-icon" title="List Table View">☰</button>
+          <button id="filter-clear-btn" class="btn btn-outline btn-sm" title="Clear all filters">Reset</button>
+        </div>
+      </div>
+
+      <!-- Active Filter Tags & Count Bar -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.75rem;">
+        <div id="dir-count-text" style="font-size: 0.92rem; font-weight: 600; color: var(--text-secondary);">
+          Showing 35 alumni
+        </div>
+        <div id="active-tags-container" style="display: flex; gap: 0.4rem; flex-wrap: wrap;"></div>
+      </div>
+
+      <!-- Alumni List / Cards Container -->
+      <div id="directory-container" class="directory-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem;">
+        <!-- Rendered dynamically by directory.js -->
+      </div>
+
+      <!-- Pagination Controls -->
+      <div id="directory-pagination" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 3rem;">
+        <!-- Rendered dynamically by directory.js -->
+      </div>
+    </section>
+
+    <!-- Quick Preview Profile Modal -->
+    <div id="alumni-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 650px;">
+        <div class="modal-header">
+          <h3 class="modal-title">Alumnus Profile</h3>
+          <button class="modal-close" onclick="document.getElementById('alumni-modal').classList.remove('active')">✕</button>
+        </div>
+        <div id="modal-profile-body" class="modal-body">
+          <!-- Populated by directory.js -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline" onclick="document.getElementById('alumni-modal').classList.remove('active')">Close</button>
+          <a id="modal-full-profile-btn" href="#" class="btn btn-primary">Open Full Profile Page</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer id="app-footer"></footer>
+
+  <script type="module" src="../js/storage.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/ui.js"></script>
+  <script type="module" src="../js/directory.js"></script>
+</body>
+</html>

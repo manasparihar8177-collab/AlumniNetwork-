@@ -1,0 +1,102 @@
+/* ==========================================================================
+   AlumniNetwork - Dark Theme Stylesheet
+   Sleek, high-contrast dark mode tailored for late-night readability
+   ========================================================================== */
+
+[data-theme="dark"] {
+  --bg-body: #0B1120;
+  --bg-surface: #1E293B;
+  --bg-surface-elevated: #1E293B;
+  --bg-surface-hover: #334155;
+  --bg-muted: #1E293B;
+  --bg-accent: #334155;
+
+  --border-subtle: #334155;
+  --border-medium: #475569;
+  --border-focus: #38BDF8;
+
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-inverse: #0F172A;
+  --text-link: #38BDF8;
+
+  --color-primary-light: rgba(14, 165, 233, 0.2);
+  --color-primary-soft: rgba(14, 165, 233, 0.15);
+
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .app-header {
+  background: rgba(15, 23, 42, 0.92);
+  border-bottom: 1px solid #1E293B;
+}
+
+[data-theme="dark"] .page-hero {
+  background: linear-gradient(180deg, rgba(14, 165, 233, 0.1) 0%, rgba(11, 17, 32, 0) 100%);
+  border-bottom: 1px solid #1E293B;
+}
+
+[data-theme="dark"] .form-control {
+  background: #0F172A;
+  border-color: #334155;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .form-control:focus {
+  border-color: var(--color-primary);
+  background: #0F172A;
+}
+
+[data-theme="dark"] .dropdown-menu,
+[data-theme="dark"] .notif-panel,
+[data-theme="dark"] .mobile-drawer,
+[data-theme="dark"] .modal-content {
+  background: #1E293B;
+  border-color: #334155;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .modal-footer {
+  background: #0F172A;
+  border-top-color: #334155;
+}
+
+[data-theme="dark"] .notif-item:hover {
+  background: #334155;
+}
+
+[data-theme="dark"] .notif-item.unread {
+  background: rgba(14, 165, 233, 0.15);
+}
+
+[data-theme="dark"] .data-table th {
+  background: #0F172A;
+  border-bottom-color: #334155;
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .data-table td {
+  border-bottom-color: #334155;
+}
+
+[data-theme="dark"] .data-table tr:hover td {
+  background: #334155;
+}
+
+[data-theme="dark"] .app-footer {
+  background: #0F172A;
+  border-top-color: #1E293B;
+}
+
+[data-theme="dark"] .footer-bottom {
+  border-top-color: #1E293B;
+}
+
+[data-theme="dark"] .empty-state {
+  background: #1E293B;
+  border-color: #334155;
+}

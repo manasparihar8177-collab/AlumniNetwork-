@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundraising & Campaigns - AlumniNetwork</title>
+  <meta name="description" content="Support student scholarships, clean energy campus initiatives, and frontier computing research clusters. Give back to your alma mater.">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/dark.css">
+</head>
+<body>
+  <header id="app-header"></header>
+
+  <main style="padding-bottom: 5rem;">
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h1 class="page-hero-title">Giving & University Campaigns</h1>
+            <p class="page-hero-subtitle">
+              Endow merit scholarships, accelerate frontier AI research clusters, and green our campus for generations to come.
+            </p>
+          </div>
+          <div id="fundraising-hero-actions">
+            <button id="start-campaign-btn" class="btn btn-primary">
+              🚀 Launch a Campaign
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact Counter Highlights -->
+    <section class="container" style="margin-bottom: 2.5rem;">
+      <div class="stats-grid">
+        <div class="stat-item card">
+          <div id="fund-total-raised" class="stat-number">₹93.2L</div>
+          <div class="stat-label">Total Raised</div>
+        </div>
+        <div class="stat-item card">
+          <div id="fund-active-campaigns" class="stat-number">4</div>
+          <div class="stat-label">Active Campaigns</div>
+        </div>
+        <div class="stat-item card">
+          <div id="fund-donors-count" class="stat-number">38+</div>
+          <div class="stat-label">Alumni Donors</div>
+        </div>
+        <div class="stat-item card">
+          <div class="stat-number" style="color: var(--color-success);">100%</div>
+          <div class="stat-label">Simulated Tax Deductible (80G)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Campaigns Section -->
+    <section class="container">
+      <div class="section-header" style="margin-bottom: 1.5rem;">
+        <div>
+          <h2 class="section-title">Active University Endowments</h2>
+          <p class="section-subtitle">Choose a cause and make a simulated contribution in seconds</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button id="filter-all-camp-btn" class="btn btn-sm btn-primary">All Causes</button>
+          <button id="show-donor-wall-btn" class="btn btn-sm btn-outline">🏆 Global Donor Wall</button>
+        </div>
+      </div>
+
+      <!-- Campaigns Grid -->
+      <div id="campaigns-grid" class="campaigns-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.75rem;">
+        <!-- Populated by fundraising.js -->
+      </div>
+
+      <!-- Global Donor Wall (Collapsible / Toggleable) -->
+      <div id="donor-wall-section" style="margin-top: 3.5rem; display: none;">
+        <div class="card" style="padding: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <div>
+              <h2 style="font-size: 1.5rem; font-weight: 800;">🏆 Honor Roll of Alumni Donors</h2>
+              <p style="font-size: 0.88rem; color: var(--text-secondary);">Gratefully recognizing our community patrons and benefactors</p>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="document.getElementById('donor-wall-section').style.display='none'">✕ Close Wall</button>
+          </div>
+          <div id="donor-wall-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+            <!-- Populated by fundraising.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Donation Modal -->
+    <div id="donate-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 540px;">
+        <div class="modal-header">
+          <h3 id="modal-campaign-title" class="modal-title">Make a Contribution</h3>
+          <button class="modal-close" onclick="document.getElementById('donate-modal').classList.remove('active')">✕</button>
+        </div>
+        <form id="donation-form">
+          <input type="hidden" id="donate-campaign-id">
+          <div class="modal-body">
+            <!-- Preset Amount Buttons -->
+            <label class="form-label" style="margin-bottom: 0.5rem;">Select Contribution Tier</label>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-bottom: 1.25rem;">
+              <button type="button" class="btn btn-outline btn-sm tier-btn" data-amt="2500">₹2,500</button>
+              <button type="button" class="btn btn-outline btn-sm tier-btn" data-amt="5000">₹5,000</button>
+              <button type="button" class="btn btn-outline btn-sm tier-btn active" data-amt="10000" style="background: var(--color-primary-light); color: var(--color-primary-dark); font-weight: 700;">₹10,000</button>
+              <button type="button" class="btn btn-outline btn-sm tier-btn" data-amt="25000">₹25,000</button>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="donate-custom-amount">Or Custom Amount (₹) *</label>
+              <input type="number" id="donate-custom-amount" class="form-control" value="10000" min="100" max="10000000" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="donate-name">Donor Display Name *</label>
+              <input type="text" id="donate-name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; cursor: pointer;">
+                <input type="checkbox" id="donate-anonymous">
+                <span>Contribute anonymously on public honor wall</span>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="donate-message">Donor Dedication Message</label>
+              <textarea id="donate-message" class="form-control" rows="2" placeholder="e.g. In honor of the Batch of 2015, or inspiring our future engineers!"></textarea>
+            </div>
+
+            <div style="background: var(--bg-muted); padding: 0.85rem; border-radius: var(--radius-md); font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
+              <span>🔒</span>
+              <span>Simulated Payment Gateway. No real currency is charged. Progress bar updates instantly.</span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" onclick="document.getElementById('donate-modal').classList.remove('active')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Process Contribution</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Start Campaign Modal (Admin) -->
+    <div id="start-campaign-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 620px;">
+        <div class="modal-header">
+          <h3 class="modal-title">🚀 Launch New University Campaign</h3>
+          <button class="modal-close" onclick="document.getElementById('start-campaign-modal').classList.remove('active')">✕</button>
+        </div>
+        <form id="start-campaign-form">
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-label" for="camp-title">Campaign Title *</label>
+              <input type="text" id="camp-title" class="form-control" placeholder="e.g. Women in STEM Innovation Endowment" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="camp-goal">Fundraising Goal (₹) *</label>
+                <input type="number" id="camp-goal" class="form-control" min="50000" placeholder="e.g. 2000000" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="camp-deadline">Target Completion Date *</label>
+                <input type="date" id="camp-deadline" class="form-control" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="camp-category">Category *</label>
+                <select id="camp-category" class="form-control form-select" required>
+                  <option value="Scholarships">Scholarships</option>
+                  <option value="Infrastructure">Infrastructure</option>
+                  <option value="Sustainability">Sustainability</option>
+                  <option value="Innovation">Innovation & Research</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="camp-image">Campaign Banner URL</label>
+                <input type="url" id="camp-image" class="form-control" placeholder="https://images.unsplash.com/...">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="camp-desc">Campaign Narrative & Impact Statement *</label>
+              <textarea id="camp-desc" class="form-control" rows="4" placeholder="Detail how funds will be deployed and the specific community outcomes..." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" onclick="document.getElementById('start-campaign-modal').classList.remove('active')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Launch Campaign</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer id="app-footer"></footer>
+
+  <script type="module" src="../js/storage.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/ui.js"></script>
+  <script type="module" src="../js/fundraising.js"></script>
+</body>
+</html>

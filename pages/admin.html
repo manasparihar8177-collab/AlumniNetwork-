@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - AlumniNetwork</title>
+  <meta name="description" content="Administrative control center for AlumniNetwork. Manage users, verify events, oversee jobs, track donations, and export reports.">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/dark.css">
+
+  <!-- Chart.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    @media print {
+      body { background: #fff !important; color: #000 !important; }
+      #app-header, #app-footer, .admin-controls-bar, .admin-tab-nav, .btn, .search-input-group, #role-modal, .toast-container {
+        display: none !important;
+      }
+      .admin-content-card { box-shadow: none !important; border: 1px solid #ccc !important; }
+      .data-table { font-size: 10pt !important; }
+      .data-table th, .data-table td { padding: 4pt 6pt !important; }
+    }
+  </style>
+</head>
+<body>
+  <header id="app-header"></header>
+
+  <main style="padding-bottom: 5rem;">
+    <!-- Route Guard Warning / Non-Admin Notice (Shown only if not logged in as Admin) -->
+    <div id="admin-guard-banner" class="container" style="display: none; margin-top: 2rem;">
+      <div class="card" style="border-left: 5px solid var(--color-danger); padding: 2rem; background: var(--bg-surface-elevated);">
+        <h3 style="color: var(--color-danger); margin-bottom: 0.5rem;">🔒 Admin Access Restricted</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1.25rem;">
+          You are currently viewing this page as a non-admin role. As required by the PRD, only users with the <strong>Admin</strong> role can modify site data, delete records, and access private audits.
+        </p>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <button class="btn btn-primary" onclick="window.AlumniUI.switchUserRole('admin')">
+            Switch to Admin Role (Dr. Vikram Seth)
+          </button>
+          <a href="../index.html" class="btn btn-outline">Return to Home</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Portal View (Accessible to Admin) -->
+    <div id="admin-portal-content">
+      <!-- Admin Hero Header -->
+      <section class="page-hero">
+        <div class="container">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                <span class="badge badge-danger">ADMINISTRATIVE CONSOLE</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Protected Workspace</span>
+              </div>
+              <h1 class="page-hero-title">Executive Dashboard & Reports</h1>
+              <p class="page-hero-subtitle">
+                System health, alumni engagement analytics, record management, and compliance exports.
+              </p>
+            </div>
+            <div class="admin-controls-bar" style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+              <button id="export-csv-btn" class="btn btn-outline btn-sm">
+                📥 Export CSV Report
+              </button>
+              <button id="print-pdf-btn" class="btn btn-outline btn-sm">
+                🖨️ Printable PDF
+              </button>
+              <button id="admin-reset-btn" class="btn btn-danger btn-sm">
+                🔄 Reset Seed Data
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- KPI Stat Cards -->
+      <section class="container" style="margin-bottom: 2.5rem;">
+        <div class="stats-grid">
+          <div class="stat-item card">
+            <div id="adm-stat-alumni" class="stat-number">35</div>
+            <div class="stat-label">Registered Alumni</div>
+          </div>
+          <div class="stat-item card">
+            <div id="adm-stat-events" class="stat-number">8</div>
+            <div class="stat-label">Active Events</div>
+          </div>
+          <div class="stat-item card">
+            <div id="adm-stat-jobs" class="stat-number">10</div>
+            <div class="stat-label">Open Jobs</div>
+          </div>
+          <div class="stat-item card">
+            <div id="adm-stat-donations" class="stat-number">₹93.2L</div>
+            <div class="stat-label">Total Endowment Raised</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Analytics Charts Section -->
+      <section class="container" style="margin-bottom: 2.5rem;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;" class="admin-charts-grid">
+          <!-- Alumni by Batch Distribution Chart -->
+          <div class="card admin-content-card">
+            <h3 style="font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
+              <span>📊 Alumni Batch Distribution</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Cohorts</span>
+            </h3>
+            <div style="height: 260px; position: relative;">
+              <canvas id="chart-batches"></canvas>
+            </div>
+          </div>
+
+          <!-- Alumni by Profession Breakdown Chart -->
+          <div class="card admin-content-card">
+            <h3 style="font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
+              <span>🍩 Profession Breakdown</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Career Verticals</span>
+            </h3>
+            <div style="height: 260px; position: relative;">
+              <canvas id="chart-professions"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Management Tabs Section -->
+      <section class="container">
+        <!-- Tabs Header -->
+        <div class="admin-tab-nav" style="display: flex; gap: 0.5rem; border-bottom: 2px solid var(--border-subtle); padding-bottom: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+          <button id="tab-btn-alumni" class="btn btn-sm btn-primary">👥 Manage Alumni (35)</button>
+          <button id="tab-btn-events" class="btn btn-sm btn-outline">📅 Manage Events (8)</button>
+          <button id="tab-btn-jobs" class="btn btn-sm btn-outline">💼 Manage Jobs (10)</button>
+          <button id="tab-btn-campaigns" class="btn btn-sm btn-outline">❤️ Campaigns & Donations</button>
+          <button id="tab-btn-activity" class="btn btn-sm btn-outline">📜 Audit Activity Log</button>
+        </div>
+
+        <!-- Tab 1: Alumni Management -->
+        <div id="admin-tab-alumni" class="card admin-content-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+            <div class="search-input-group" style="max-width: 340px;">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="adm-alumni-search" class="form-control" placeholder="Search alumni...">
+            </div>
+            <button id="adm-add-alumni-btn" class="btn btn-primary btn-sm">➕ Add New Alumnus</button>
+          </div>
+          <div id="adm-alumni-table-container">
+            <!-- Populated by admin.js -->
+          </div>
+        </div>
+
+        <!-- Tab 2: Events Management -->
+        <div id="admin-tab-events" class="card admin-content-card" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+            <h3 style="font-size: 1.2rem;">Community Events & Galas</h3>
+            <a href="events.html" class="btn btn-primary btn-sm">➕ Create Event</a>
+          </div>
+          <div id="adm-events-table-container">
+            <!-- Populated by admin.js -->
+          </div>
+        </div>
+
+        <!-- Tab 3: Jobs Management -->
+        <div id="admin-tab-jobs" class="card admin-content-card" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+            <h3 style="font-size: 1.2rem;">Job Board Postings</h3>
+            <a href="jobs.html" class="btn btn-primary btn-sm">➕ Post New Job</a>
+          </div>
+          <div id="adm-jobs-table-container">
+            <!-- Populated by admin.js -->
+          </div>
+        </div>
+
+        <!-- Tab 4: Campaigns & Donations Management -->
+        <div id="admin-tab-campaigns" class="card admin-content-card" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+            <h3 style="font-size: 1.2rem;">Donation Records & Campaign Oversight</h3>
+            <a href="fundraising.html" class="btn btn-primary btn-sm">🚀 New Campaign</a>
+          </div>
+          <div id="adm-campaigns-table-container">
+            <!-- Populated by admin.js -->
+          </div>
+        </div>
+
+        <!-- Tab 5: Audit Activity Log -->
+        <div id="admin-tab-activity" class="card admin-content-card" style="display: none;">
+          <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">System Audit Trail</h3>
+          <div id="adm-activity-table-container">
+            <!-- Populated by admin.js -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Add/Edit Alumnus Modal for Admin -->
+    <div id="admin-alumni-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+          <h3 id="admin-alm-modal-title" class="modal-title">Add Alumnus Record</h3>
+          <button class="modal-close" onclick="document.getElementById('admin-alumni-modal').classList.remove('active')">✕</button>
+        </div>
+        <form id="admin-alumni-form">
+          <input type="hidden" id="admin-alm-id">
+          <div class="modal-body">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="adm-alm-name">Full Name *</label>
+                <input type="text" id="adm-alm-name" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="adm-alm-email">Email Address *</label>
+                <input type="email" id="adm-alm-email" class="form-control" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="adm-alm-profession">Profession *</label>
+                <select id="adm-alm-profession" class="form-control form-select" required>
+                  <option value="Software Engineer">Software Engineer</option>
+                  <option value="Data Scientist">Data Scientist</option>
+                  <option value="Entrepreneur">Entrepreneur</option>
+                  <option value="Academician">Academician</option>
+                  <option value="Healthcare Professional">Healthcare Professional</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="adm-alm-company">Company *</label>
+                <input type="text" id="adm-alm-company" class="form-control" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="adm-alm-batch">Batch *</label>
+                <input type="text" id="adm-alm-batch" class="form-control" placeholder="2020" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="adm-alm-branch">Branch *</label>
+                <select id="adm-alm-branch" class="form-control form-select" required>
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="Information Technology">Information Tech</option>
+                  <option value="Electronics & Communication">Electronics & Comm</option>
+                  <option value="Mechanical Engineering">Mechanical</option>
+                  <option value="Civil Engineering">Civil</option>
+                  <option value="Biotechnology">Biotechnology</option>
+                  <option value="Electrical & Electronics">Electrical</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="adm-alm-location">Location *</label>
+                <select id="adm-alm-location" class="form-control form-select" required>
+                  <option value="Bangalore">Bangalore</option>
+                  <option value="Chennai">Chennai</option>
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Hyderabad">Hyderabad</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="adm-alm-skills">Skills (Comma-separated) *</label>
+              <input type="text" id="adm-alm-skills" class="form-control" placeholder="Python, Cloud, System Design" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="adm-alm-bio">Bio Summary *</label>
+              <textarea id="adm-alm-bio" class="form-control" rows="3" required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" onclick="document.getElementById('admin-alumni-modal').classList.remove('active')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Alumnus</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer id="app-footer"></footer>
+
+  <script type="module" src="../js/storage.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/ui.js"></script>
+  <script type="module" src="../js/admin.js"></script>
+</body>
+</html>

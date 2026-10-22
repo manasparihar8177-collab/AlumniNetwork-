@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - AlumniNetwork</title>
+  <meta name="description" content="Register as an alumnus, student, or university administrator on the AlumniNetwork community platform.">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/dark.css">
+</head>
+<body style="min-height: 100vh; display: flex; flex-direction: column;">
+  <header id="app-header"></header>
+
+  <main style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem;">
+    <div class="card" style="width: 100%; max-width: 600px; padding: 2.5rem; box-shadow: var(--shadow-xl);">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <div class="brand-icon" style="width: 48px; height: 48px; margin: 0 auto 0.75rem; font-size: 1.5rem; background: linear-gradient(135deg, var(--color-primary), #0284C7); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: #fff;">
+          🎓
+        </div>
+        <h1 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.35rem;">Join the Community</h1>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">
+          Create your verified profile to discover peers, post jobs, and access mentorship
+        </p>
+      </div>
+
+      <form id="register-form">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name *</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="e.g. Ananya Roy" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email Address *</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="name@alumni.edu" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="reg-role">Member Role *</label>
+            <select id="reg-role" class="form-control form-select" required>
+              <option value="alumni" selected>Alumni Graduate</option>
+              <option value="student">Current Student</option>
+              <option value="admin">University Administrator</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password *</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="Create a password" required>
+          </div>
+        </div>
+
+        <!-- Dynamic Alumni-Specific Fields -->
+        <div id="alumni-specific-fields">
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="reg-batch">Graduation Batch *</label>
+              <input type="text" id="reg-batch" class="form-control" value="2024" placeholder="e.g. 2022">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reg-branch">Branch *</label>
+              <select id="reg-branch" class="form-control form-select">
+                <option value="Computer Science">Computer Science</option>
+                <option value="Information Technology">Information Tech</option>
+                <option value="Electronics & Communication">Electronics & Comm</option>
+                <option value="Mechanical Engineering">Mechanical</option>
+                <option value="Civil Engineering">Civil</option>
+                <option value="Biotechnology">Biotechnology</option>
+                <option value="Electrical & Electronics">Electrical</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reg-location">City / Location *</label>
+              <select id="reg-location" class="form-control form-select">
+                <option value="Bangalore">Bangalore</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Hyderabad">Hyderabad</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="reg-profession">Current Profession *</label>
+              <select id="reg-profession" class="form-control form-select">
+                <option value="Software Engineer">Software Engineer</option>
+                <option value="Data Scientist">Data Scientist</option>
+                <option value="Entrepreneur">Entrepreneur</option>
+                <option value="Academician">Academician</option>
+                <option value="Healthcare Professional">Healthcare Professional</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reg-company">Organization / Company *</label>
+              <input type="text" id="reg-company" class="form-control" placeholder="e.g. Google, Infosys, Startup">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-bio">Short Bio *</label>
+            <textarea id="reg-bio" class="form-control" rows="2" placeholder="Briefly introduce yourself to fellow alumni and student mentees..."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 1rem;">
+          Complete Registration & Enter
+        </button>
+      </form>
+
+      <div style="text-align: center; margin-top: 1.75rem; font-size: 0.88rem; color: var(--text-secondary);">
+        Already registered? <a href="login.html" style="font-weight: 700;">Sign In Instead</a>
+      </div>
+    </div>
+  </main>
+
+  <footer id="app-footer"></footer>
+
+  <script type="module" src="../js/storage.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/ui.js"></script>
+  <script type="module" src="../js/auth-pages.js"></script>
+</body>
+</html>

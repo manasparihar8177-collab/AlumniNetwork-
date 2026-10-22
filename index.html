@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlumniNetwork - Connect, Mentor, Give & Grow</title>
+  <meta name="description" content="Official global alumni network connecting graduates with their alma mater and peers. Explore directories, events, jobs, mentorship, and campaigns.">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/dark.css">
+</head>
+<body>
+  <!-- Global App Header rendered by ui.js -->
+  <header id="app-header"></header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="home-hero">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            <span>Global Alumni Community • 10,000+ Strong</span>
+          </div>
+          <h1 class="hero-heading">
+            Connect With Your <span class="gradient-text">Alma Mater</span> & Peers Worldwide
+          </h1>
+          <p class="hero-desc">
+            One unified platform to discover fellow graduates, attend inspiring reunions, find tier-1 career opportunities, mentor students, and contribute to transformative university campaigns.
+          </p>
+
+          <div class="hero-actions">
+            <a href="pages/directory.html" class="btn btn-primary btn-lg">
+              <span>Explore Directory</span>
+              <span>→</span>
+            </a>
+            <a href="pages/events.html" class="btn btn-outline btn-lg">
+              <span>View Upcoming Events</span>
+            </a>
+          </div>
+
+          <div class="hero-user-hint">
+            <span style="font-size: 0.85rem; color: var(--text-muted);">
+              💡 <strong>Instant Testing:</strong> Use the role pill in the top bar to switch between <em>Admin</em>, <em>Alumni</em>, and <em>Student</em> roles.
+            </span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-card-stack">
+            <div class="hero-preview-card card">
+              <div class="preview-header">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80" class="preview-avatar" alt="Priya Sundaram">
+                <div>
+                  <h4 style="font-size: 1rem; margin-bottom: 0.15rem;">Priya Sundaram</h4>
+                  <div style="font-size: 0.8rem; color: var(--color-primary); font-weight: 600;">Staff Engineer at Stripe</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">Class of 2015 • Computer Science</div>
+                </div>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0.75rem 0;">
+                "Mentoring 3 student teams this semester. Thrilled to give back to our university's engineering community!"
+              </p>
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                <span class="badge badge-primary">Distributed Systems</span>
+                <span class="badge badge-success">Available for Mentorship</span>
+              </div>
+            </div>
+
+            <div class="hero-floating-stat card">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="font-size: 1.8rem;">🎉</div>
+                <div>
+                  <div style="font-size: 1.1rem; font-weight: 800; color: var(--color-primary);">₹93.2 Lakhs</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">Raised for Student Scholarships & Labs</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Counter Bar -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item card">
+            <div class="stat-number" id="stat-alumni-count">3,500+</div>
+            <div class="stat-label">Verified Alumni</div>
+          </div>
+          <div class="stat-item card">
+            <div class="stat-number" id="stat-events-count">48</div>
+            <div class="stat-label">Reunions & Summits</div>
+          </div>
+          <div class="stat-item card">
+            <div class="stat-number" id="stat-jobs-count">120+</div>
+            <div class="stat-label">Jobs & Internships</div>
+          </div>
+          <div class="stat-item card">
+            <div class="stat-number" id="stat-donations-count">₹93.2L</div>
+            <div class="stat-label">Campaign Contributions</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Alumni Carousel / Cards -->
+    <section class="section container">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Spotlight</span>
+          <h2 class="section-title">Distinguished Alumni</h2>
+          <p class="section-subtitle">Meet leaders, innovators, and entrepreneurs shaping industries worldwide</p>
+        </div>
+        <a href="pages/directory.html" class="btn btn-outline btn-sm">View All Directory →</a>
+      </div>
+
+      <div id="featured-alumni-grid" class="featured-alumni-grid">
+        <!-- Rendered dynamically by home.js -->
+      </div>
+    </section>
+
+    <!-- Upcoming Events Preview -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="section-tag">Gatherings</span>
+            <h2 class="section-title">Upcoming Reunions & Events</h2>
+            <p class="section-subtitle">Connect in-person and virtually with fellow alumni</p>
+          </div>
+          <a href="pages/events.html" class="btn btn-outline btn-sm">See Full Schedule →</a>
+        </div>
+
+        <div id="upcoming-events-grid" class="events-preview-grid">
+          <!-- Rendered dynamically by home.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Alumni Success Stories (PRD Bonus Feature) -->
+    <section class="section container">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Impact</span>
+          <h2 class="section-title">Alumni Success Stories</h2>
+          <p class="section-subtitle">Real journeys from college classrooms to global breakthroughs</p>
+        </div>
+      </div>
+
+      <div id="stories-grid" class="stories-grid">
+        <!-- Rendered dynamically by home.js -->
+      </div>
+    </section>
+
+    <!-- Active Fundraising Highlights -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="section-tag">Giving Back</span>
+            <h2 class="section-title">Transformative Campaigns</h2>
+            <p class="section-subtitle">Support scholarships, research clusters, and campus sustainability</p>
+          </div>
+          <a href="pages/fundraising.html" class="btn btn-primary btn-sm">Contribute Today →</a>
+        </div>
+
+        <div id="campaigns-preview-grid" class="campaigns-preview-grid">
+          <!-- Rendered dynamically by home.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest News & Announcements -->
+    <section class="section container">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Stay Informed</span>
+          <h2 class="section-title">Campus & Alumni News</h2>
+          <p class="section-subtitle">Recent accolades, achievements, and notices</p>
+        </div>
+        <a href="pages/news.html" class="btn btn-outline btn-sm">All News Articles →</a>
+      </div>
+
+      <div id="news-preview-grid" class="news-preview-grid">
+        <!-- Rendered dynamically by home.js -->
+      </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="cta-banner-section container">
+      <div class="cta-card">
+        <div class="cta-content">
+          <h2 style="font-size: 2.2rem; color: #fff; margin-bottom: 0.75rem;">Are You a University Graduate?</h2>
+          <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; max-width: 580px; margin-bottom: 1.75rem;">
+            Claim your alumni profile, reconnect with your classmates, mentor aspiring students, or share job openings at your company.
+          </p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="pages/register.html" class="btn btn-secondary btn-lg" style="background: #fff; color: var(--color-primary-dark);">Register as Alumni</a>
+            <a href="pages/directory.html" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.6); color: #fff;">Search Your Batchmates</a>
+          </div>
+        </div>
+        <div class="cta-illustration">🎓</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Global App Footer rendered by ui.js -->
+  <footer id="app-footer"></footer>
+
+  <script type="module" src="js/storage.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/ui.js"></script>
+  <script type="module" src="js/home.js"></script>
+</body>
+</html>

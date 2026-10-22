@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Board & Internships - AlumniNetwork</title>
+  <meta name="description" content="Discover career opportunities, full-time engineering roles, and internships posted by university alumni.">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/dark.css">
+</head>
+<body>
+  <header id="app-header"></header>
+
+  <main style="padding-bottom: 5rem;">
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h1 class="page-hero-title">Career Opportunities</h1>
+            <p class="page-hero-subtitle">
+              Explore high-growth tech, research, and leadership roles referred directly by verified alumni.
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.75rem;">
+            <button id="post-job-btn" class="btn btn-primary">
+              💼 Post a Job Opening
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters & Tabs -->
+    <section class="container">
+      <div class="filter-bar">
+        <!-- Keyword Search -->
+        <div class="search-input-group">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="job-search" class="form-control" placeholder="Search by role title, company, or tech stack...">
+        </div>
+
+        <!-- Job Type Filter -->
+        <select id="job-type-filter" class="form-control form-select" style="min-width: 150px; flex: 1;">
+          <option value="">All Job Types</option>
+          <option value="Full-time">Full-time</option>
+          <option value="Internship">Internship</option>
+          <option value="Remote">Remote</option>
+          <option value="Contract">Contract</option>
+        </select>
+
+        <!-- Location Filter -->
+        <select id="job-location-filter" class="form-control form-select" style="min-width: 150px; flex: 1;">
+          <option value="">All Locations</option>
+          <option value="Bangalore">Bangalore</option>
+          <option value="Mumbai">Mumbai</option>
+          <option value="Chennai">Chennai</option>
+          <option value="Hyderabad">Hyderabad</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Remote">Remote</option>
+        </select>
+
+        <!-- My Postings / My Applications Tab -->
+        <select id="job-tab-filter" class="form-control form-select" style="min-width: 170px; flex: 1;">
+          <option value="all">All Postings</option>
+          <option value="my-apps">My Applications</option>
+          <option value="my-postings">My Posted Jobs</option>
+        </select>
+      </div>
+
+      <!-- Job List Container -->
+      <div id="jobs-container" style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <!-- Populated by jobs.js -->
+      </div>
+    </section>
+
+    <!-- Apply Job Modal -->
+    <div id="apply-job-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 580px;">
+        <div class="modal-header">
+          <h3 id="modal-apply-title" class="modal-title">Apply to Position</h3>
+          <button class="modal-close" onclick="document.getElementById('apply-job-modal').classList.remove('active')">✕</button>
+        </div>
+        <form id="apply-job-form">
+          <input type="hidden" id="apply-job-id">
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-label" for="apply-name">Your Full Name *</label>
+              <input type="text" id="apply-name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="apply-email">Email Address *</label>
+              <input type="email" id="apply-email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="apply-resume">Resume / Portfolio Link (or Google Drive URL) *</label>
+              <input type="url" id="apply-resume" class="form-control" placeholder="https://drive.google.com/your-resume or LinkedIn" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="apply-cover">Why are you a great fit? (Cover note) *</label>
+              <textarea id="apply-cover" class="form-control" rows="4" placeholder="Mention relevant coursework, projects, or work experience..." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" onclick="document.getElementById('apply-job-modal').classList.remove('active')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Submit Application</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Post Job Modal (Alumni / Admin) -->
+    <div id="post-job-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 650px;">
+        <div class="modal-header">
+          <h3 class="modal-title">💼 Post a Job Opening</h3>
+          <button class="modal-close" onclick="document.getElementById('post-job-modal').classList.remove('active')">✕</button>
+        </div>
+        <form id="post-job-form">
+          <div class="modal-body">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="post-title">Job Title *</label>
+                <input type="text" id="post-title" class="form-control" placeholder="e.g. Senior Frontend Engineer" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="post-company">Company Name *</label>
+                <input type="text" id="post-company" class="form-control" placeholder="e.g. Stripe, Razorpay" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label" for="post-type">Job Type *</label>
+                <select id="post-type" class="form-control form-select" required>
+                  <option value="Full-time">Full-time</option>
+                  <option value="Internship">Internship</option>
+                  <option value="Remote">Remote</option>
+                  <option value="Contract">Contract</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="post-location">Location *</label>
+                <input type="text" id="post-location" class="form-control" placeholder="e.g. Bangalore (Hybrid)" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="post-salary">Compensation / Stipend</label>
+                <input type="text" id="post-salary" class="form-control" placeholder="e.g. ₹25L - ₹35L">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="post-desc">Job Description & Responsibilities *</label>
+              <textarea id="post-desc" class="form-control" rows="4" placeholder="Detail the role, mission, and day-to-day work..." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="post-reqs">Requirements (Comma-separated) *</label>
+              <input type="text" id="post-reqs" class="form-control" placeholder="3+ years React, TypeScript, System Design" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="post-deadline">Application Deadline *</label>
+              <input type="date" id="post-deadline" class="form-control" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" onclick="document.getElementById('post-job-modal').classList.remove('active')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Publish Job Opportunity</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Applicants Viewer Modal (For Job Creator) -->
+    <div id="applicants-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+          <h3 id="applicants-modal-title" class="modal-title">Applicant Submissions</h3>
+          <button class="modal-close" onclick="document.getElementById('applicants-modal').classList.remove('active')">✕</button>
+        </div>
+        <div id="applicants-modal-body" class="modal-body">
+          <!-- Populated by jobs.js -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline" onclick="document.getElementById('applicants-modal').classList.remove('active')">Close</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="app-footer"></footer>
+
+  <script type="module" src="../js/storage.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/ui.js"></script>
+  <script type="module" src="../js/jobs.js"></script>
+</body>
+</html>

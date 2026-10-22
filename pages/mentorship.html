@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentorship Program - AlumniNetwork</title>
+  <meta name="description" content="Connect 1-on-1 with industry veterans and alumni mentors for resume reviews, mock interviews, and career guidance.">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/dark.css">
+</head>
+<body>
+  <header id="app-header"></header>
+
+  <main style="padding-bottom: 5rem;">
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h1 class="page-hero-title">Alumni Mentorship Hub</h1>
+            <p class="page-hero-subtitle">
+              Get personalized 1-on-1 career guidance, system design mock interviews, and graduate school coaching from senior alumni.
+            </p>
+          </div>
+          <div id="mentorship-hero-actions" style="display: flex; gap: 0.75rem;">
+            <button id="become-mentor-btn" class="btn btn-primary">
+              🌟 Become a Mentor
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs: Browse Mentors vs My Requests/Dashboard -->
+    <section class="container">
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 2rem; border-bottom: 2px solid var(--border-subtle); padding-bottom: 0.5rem;">
+        <button id="tab-browse-btn" class="btn btn-sm btn-primary" style="border-radius: var(--radius-full);">
+          👥 Browse Mentors (6)
+        </button>
+        <button id="tab-my-requests-btn" class="btn btn-sm btn-outline" style="border-radius: var(--radius-full);">
+          📬 My Mentorship Dashboard
+        </button>
+      </div>
+
+      <!-- Tab 1: Browse Mentors -->
+      <div id="tab-browse-content">
+        <!-- Search & Filter -->
+        <div class="filter-bar">
+          <div class="search-input-group">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="mentor-search" class="form-control" placeholder="Search by mentor name, company, or guidance topic...">
+          </div>
+
+          <select id="mentor-expertise-filter" class="form-control form-select" style="min-width: 200px; flex: 1;">
+            <option value="">All Expertise Areas</option>
+            <option value="System Design">System Design</option>
+            <option value="Machine Learning">Machine Learning / AI</option>
+            <option value="Startup Ideation">Startup Ideation & VC</option>
+            <option value="Academic Research">Academic Research / PhD</option>
+            <option value="Career Transition">Career Transition to CS</option>
+            <option value="MedTech Innovation">MedTech Innovation</option>
+          </select>
+        </div>
+
+        <!-- Mentors Grid -->
+        <div id="mentors-grid" class="mentors-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.75rem;">
+          <!-- Populated by mentorship.js -->
+        </div>
+      </div>
+
+      <!-- Tab 2: Mentorship Dashboard (Incoming & Outgoing Requests) -->
+      <div id="tab-dashboard-content" style="display: none;">
+        <div id="dashboard-container">
+          <!-- Populated by mentorship.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Request Mentorship Modal -->
+    <div id="request-mentorship-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 580px;">
+        <div class="modal-header">
+          <h3 id="modal-req-title" class="modal-title">Request Mentorship</h3>
+          <button class="modal-close" onclick="document.getElementById('request-mentorship-modal').classList.remove('active')">✕</button>
+        </div>
+        <form id="request-mentorship-form">
+          <input type="hidden" id="req-mentor-id">
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-label" for="req-topic">Primary Focus / Goal *</label>
+              <input type="text" id="req-topic" class="form-control" placeholder="e.g. System Design Prep for Placements" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="req-message">Introduction & What you hope to learn *</label>
+              <textarea id="req-message" class="form-control" rows="4" placeholder="Briefly describe your background, what questions you have, and your availability..." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="req-schedule">Preferred Time / Weekend Window</label>
+              <input type="text" id="req-schedule" class="form-control" placeholder="e.g. Saturday afternoons or Sunday evenings">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" onclick="document.getElementById('request-mentorship-modal').classList.remove('active')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Send Mentorship Request</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Become a Mentor Modal -->
+    <div id="become-mentor-modal" class="modal-backdrop">
+      <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+          <h3 class="modal-title">🌟 Register as a Mentor</h3>
+          <button class="modal-close" onclick="document.getElementById('become-mentor-modal').classList.remove('active')">✕</button>
+        </div>
+        <form id="become-mentor-form">
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-label" for="mentor-availability">Weekly Availability Commitment *</label>
+              <input type="text" id="mentor-availability" class="form-control" placeholder="e.g. 2 hours / week (Weekends)" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="mentor-expertise">Expertise Areas (Comma-separated) *</label>
+              <input type="text" id="mentor-expertise" class="form-control" placeholder="System Design, Backend, Microservices" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="mentor-topics">Mentorship Topics (Comma-separated) *</label>
+              <input type="text" id="mentor-topics" class="form-control" placeholder="Resume Review, Mock Interviews, Staff+ Transition" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="mentor-bio">Mentorship Bio / Note to Mentees *</label>
+              <textarea id="mentor-bio" class="form-control" rows="3" placeholder="Tell students how you can help them achieve their career goals..." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" onclick="document.getElementById('become-mentor-modal').classList.remove('active')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Mentor Profile</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer id="app-footer"></footer>
+
+  <script type="module" src="../js/storage.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/ui.js"></script>
+  <script type="module" src="../js/mentorship.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Gallery & Reunions - AlumniNetwork</title>
+  <meta name="description" content="Relive memorable moments from annual galas, hackathons, reunions, and campus milestones in our interactive photo gallery.">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/dark.css">
+</head>
+<body>
+  <header id="app-header"></header>
+
+  <main style="padding-bottom: 5rem;">
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <h1 class="page-hero-title">Photo Gallery & Campus Memories</h1>
+        <p class="page-hero-subtitle">
+          Cherishing timeless memories of homecoming galas, hackathon all-nighters, and milestone gatherings.
+        </p>
+      </div>
+    </section>
+
+    <!-- Gallery Categories & Grid -->
+    <section class="container">
+      <!-- Category Filter Pills -->
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; justify-content: center;" id="gallery-filter-buttons">
+        <button class="btn btn-sm btn-primary gal-filter-btn" data-cat="all">All Photos (12)</button>
+        <button class="btn btn-sm btn-outline gal-filter-btn" data-cat="Reunion">Reunions & Galas</button>
+        <button class="btn btn-sm btn-outline gal-filter-btn" data-cat="Workshop">Workshops & Hackathons</button>
+        <button class="btn btn-sm btn-outline gal-filter-btn" data-cat="Campus">Campus Milestones</button>
+        <button class="btn btn-sm btn-outline gal-filter-btn" data-cat="Startups">Startups & Demos</button>
+        <button class="btn btn-sm btn-outline gal-filter-btn" data-cat="Networking">Networking</button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div id="gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+        <!-- Populated by gallery.js -->
+      </div>
+    </section>
+
+    <!-- Interactive Lightbox Modal (PRD Bonus Feature) -->
+    <div id="gallery-lightbox" class="modal-backdrop" style="background: rgba(10, 15, 26, 0.95); z-index: 2000;">
+      <div style="position: relative; max-width: 900px; width: 95%; margin: auto; text-align: center;">
+        <button id="lightbox-close" class="modal-close" style="position: absolute; top: -45px; right: 0; color: #fff; font-size: 2rem; background: rgba(255,255,255,0.1);">✕</button>
+
+        <div style="position: relative; border-radius: var(--radius-lg); overflow: hidden; max-height: 70vh; background: #000; box-shadow: var(--shadow-xl);">
+          <img id="lightbox-img" src="" alt="Gallery Preview" style="width: 100%; height: 100%; max-height: 70vh; object-fit: contain; margin: 0 auto;">
+
+          <!-- Prev / Next Arrows -->
+          <button id="lightbox-prev" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; transition: background 0.2s;">‹</button>
+          <button id="lightbox-next" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; transition: background 0.2s;">›</button>
+        </div>
+
+        <div style="margin-top: 1rem; color: #fff; text-align: left; background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(8px); padding: 1rem 1.5rem; border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 id="lightbox-title" style="font-size: 1.15rem; color: #fff; margin-bottom: 0.25rem;">Title</h3>
+            <span id="lightbox-category" class="badge badge-primary">Category</span>
+          </div>
+          <p id="lightbox-caption" style="font-size: 0.88rem; color: #CBD5E1; margin: 0.25rem 0;">Caption</p>
+          <div id="lightbox-date" style="font-size: 0.78rem; color: #94A3B8;">Date</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="app-footer"></footer>
+
+  <script type="module" src="../js/storage.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/ui.js"></script>
+  <script type="module" src="../js/gallery.js"></script>
+</body>
+</html>
